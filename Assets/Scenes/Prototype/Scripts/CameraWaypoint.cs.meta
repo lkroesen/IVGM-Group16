@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: fb0b08d972f09814faa69a396d78add7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _cam_waypoint_token: {fileID: 2672883656450496503, guid: eea901c7e5eb7fd47b63649a111c77cc,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
