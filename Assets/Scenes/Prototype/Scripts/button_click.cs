@@ -22,10 +22,8 @@ public class button_click : MonoBehaviour
     {
         Debug.Log("Clicked");
         GameObject progress = GameObject.Find("prog_plane");
-        //Get the Renderer component from the new cube
         var Renderer = progress.GetComponent<Renderer>();
 
-        //Call SetColor using the shader property name "_Color" and setting the color to red
         if(scriptA.progressint == 1){
             Renderer.material.SetColor("_Color", Color.green);
         }

@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 475400747}
   - component: {fileID: 475400746}
   m_Layer: 0
-  m_Name: Plane (3)
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 638013048}
   - component: {fileID: 638013047}
   m_Layer: 0
-  m_Name: Plane (6)
+  m_Name: 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 1101586970}
   - component: {fileID: 1101586969}
   m_Layer: 0
-  m_Name: Plane (10)
+  m_Name: 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -763,7 +763,7 @@ GameObject:
   - component: {fileID: 1142649504}
   - component: {fileID: 1142649503}
   m_Layer: 0
-  m_Name: Plane (2)
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1148,6 +1148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9e8cc35ff728e439a40d7cd2e2e309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  A: {fileID: 1841091861}
 --- !u!1 &1368457130
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,7 +1162,7 @@ GameObject:
   - component: {fileID: 1368457133}
   - component: {fileID: 1368457132}
   m_Layer: 0
-  m_Name: Plane (8)
+  m_Name: 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1348,6 +1349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2987fb95060aa444e821b624de5222f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  A: {fileID: 0}
 --- !u!1 &1468897683
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,7 +1363,7 @@ GameObject:
   - component: {fileID: 1468897686}
   - component: {fileID: 1468897685}
   m_Layer: 0
-  m_Name: Plane (7)
+  m_Name: 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1564,6 +1566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9334122cc2cf6694cb99ce09edcca6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progressint: 0
 --- !u!4 &1841091863
 Transform:
   m_ObjectHideFlags: 0
@@ -1594,7 +1597,7 @@ GameObject:
   - component: {fileID: 1844568199}
   - component: {fileID: 1844568198}
   m_Layer: 0
-  m_Name: Plane (9)
+  m_Name: 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1780,6 +1783,7 @@ GameObject:
   - component: {fileID: 1950579614}
   - component: {fileID: 1950579613}
   - component: {fileID: 1950579612}
+  - component: {fileID: 1950579616}
   m_Layer: 0
   m_Name: prog_plane
   m_TagString: Untagged
@@ -1862,6 +1866,18 @@ Transform:
   m_Father: {fileID: 1841091863}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1950579616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950579611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d5baad003193564daf514d96e09d1e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1963443269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1875,7 +1891,7 @@ GameObject:
   - component: {fileID: 1963443272}
   - component: {fileID: 1963443271}
   m_Layer: 0
-  m_Name: Plane (4)
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2062,7 +2078,7 @@ GameObject:
   - component: {fileID: 2111066383}
   - component: {fileID: 2111066382}
   m_Layer: 0
-  m_Name: Plane (5)
+  m_Name: 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2249,3 +2265,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8cf4e82871f1524893515b6a10cdb6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  A: {fileID: 0}
