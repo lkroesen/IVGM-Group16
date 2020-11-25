@@ -107,4 +107,10 @@ public class MoveMatch : MonoBehaviour
         collider_pos = other.transform.position;
       }
     }
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.collider.tag == "Match")
+      {
+          Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+      }
+    }
 }
