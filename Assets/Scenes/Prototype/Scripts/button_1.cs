@@ -16,7 +16,8 @@ public class button_1 : MonoBehaviour
     }
 
     private void OnMouseDown() {
-        scriptA.progressint = 5;
-        Debug.Log(scriptA.progressint);
+        scriptA.ButtonPress(gameObject.name);
+        // scriptA.progressint = 5;
+        // Debug.Log(scriptA.progressint);
     }
 }

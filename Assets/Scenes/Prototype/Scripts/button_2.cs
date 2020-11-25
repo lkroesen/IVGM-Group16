@@ -19,7 +19,7 @@ public class button_2 : MonoBehaviour
     }
 
     void OnMouseDown() {
-        scriptA.progressint = 1;
-        Debug.Log(scriptA.progressint);
+        // scriptA.progressint = 1;
+        // Debug.Log(scriptA.progressint);
     }
 }

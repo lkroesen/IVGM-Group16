@@ -21,14 +21,15 @@ public class button_click : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log("Clicked");
-        GameObject progress = GameObject.Find("prog_plane");
-        var Renderer = progress.GetComponent<Renderer>();
+        
+        // GameObject progress = GameObject.Find("prog_plane");
+        // var Renderer = progress.GetComponent<Renderer>();
 
-        if(scriptA.progressint == 1){
-            Renderer.material.SetColor("_Color", Color.green);
-        }
-        else{
-            Renderer.material.SetColor("_Color", Color.blue);
-        }
+        // if(scriptA.progressint == 1){
+        //     Renderer.material.SetColor("_Color", Color.green);
+        // }
+        // else{
+        //     Renderer.material.SetColor("_Color", Color.blue);
+        // }
     }
 }
