@@ -416,7 +416,7 @@ PrefabInstance:
     - target: {fileID: 1279844646168904731, guid: 0f2872723efa25448b913cbc25a7e475,
         type: 3}
       propertyPath: m_TagString
-      value: Match
+      value: Correct
       objectReference: {fileID: 0}
     - target: {fileID: 1279844646168904735, guid: 0f2872723efa25448b913cbc25a7e475,
         type: 3}

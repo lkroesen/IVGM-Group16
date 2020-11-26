@@ -34,7 +34,7 @@ public class MoveMatch : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // Store Position so that when the car collides it returns to its inital position.
+        // Store Position so that match can return to initial position
         init_pos = transform.position;
         activePiece = true;
     }
@@ -45,6 +45,17 @@ public class MoveMatch : MonoBehaviour
         if(inCollider == true){
           transform.position = collider_pos;
           inCollider = false;
+        }
+        if(this.tag != "Correct"){
+          transform.position = init_pos;
+        }
+        else if(transform.position.x > 6.8 && transform.position.x < 7.2 && transform.position.z > -9.2 && transform.position.z < -8.8){
+          var position = new Vector3(7, transform.position.y, -9);
+          transform.position = position;
+          //win
+        }
+        else{
+          transform.position = init_pos;
         }
     }
 
