@@ -15,6 +15,8 @@ public class movePiece : MonoBehaviour
 
     private bool inCollider = false;
 
+    public float speed = 0.1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,7 +68,7 @@ public class movePiece : MonoBehaviour
         var diff_x = Input.mousePosition.x - lastMousePoint_x.Value;
         var diff_y = Input.mousePosition.y - lastMousePoint_y.Value;
         var position = transform.position;
-        position = new Vector3(position.x + 5*diff_x*Time.deltaTime, position.y, position.z + 5*diff_y * Time.deltaTime);
+        position = new Vector3(position.x + 5*diff_x*Time.deltaTime*speed, position.y, position.z + 5*diff_y * Time.deltaTime * speed);
         transform.position = position;
         lastMousePoint_y = Input.mousePosition.y;
         lastMousePoint_x = Input.mousePosition.x;
