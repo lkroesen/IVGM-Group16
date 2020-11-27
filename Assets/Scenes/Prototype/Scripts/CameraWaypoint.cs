@@ -30,5 +30,7 @@ public class CameraWaypoint : MonoBehaviour
         
         // Deactivate our game object
         Destroy(transform.gameObject);
+        
+        // TODO: Do not destroy object, deactivate instead, need list of all waypoints so that return works properly.
     }
 }
