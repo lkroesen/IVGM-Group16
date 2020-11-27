@@ -6,6 +6,7 @@ TagManager:
   tags:
   - POSITION
   - PIECE
+  - REMOTE
   layers:
   - Default
   - TransparentFX

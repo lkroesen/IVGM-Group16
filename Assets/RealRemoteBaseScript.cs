@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RealRemoteBaseScript : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class RealRemoteBaseScript : MonoBehaviour
         switch (value)
         {
             case "E" : 
-                returnToStart();
+                Return();
                 break;
             case "P" : 
                 powerButton();
@@ -41,14 +42,37 @@ public class RealRemoteBaseScript : MonoBehaviour
         
     }
 
-    void returnToStart()
+    public static void Return()
     {
+        var _gameObject = GameObject.FindGameObjectWithTag("Player");
         var _cam = GameObject.FindGameObjectWithTag("MainCamera");
-        // TODO: provide prefab of the original waypoint.
+        var _wpm = _gameObject.GetComponent<WaypointManager>();
+        var _cmm = _cam.GetComponent<CameraMouseMovement>();
+        
+        if (_cmm.Disable_Camera_Movement)
+            PuzzleExit(_cmm, _gameObject);
+        
+        var wp = _wpm.returnFunc();
+        if (wp == null) 
+            return;
+        else
+        {
+            _wpm.newWaypoint(wp);
+            _cam.transform.position = wp.transform.position;
+            _cam.transform.rotation = wp.transform.rotation;
+        }
+    }
+
+    private static void PuzzleExit(CameraMouseMovement _cmm, GameObject gamecontroller)
+    {
+        _cmm.Disable_Camera_Movement = false;
+        var _pm = gamecontroller.GetComponent<PuzzleManager>();
+        _pm.showExterior();
     }
 
     public bool isTvOn = false;
     private static readonly int COLOR = Shader.PropertyToID("_Color");
+
 
     void powerButton()
     {
@@ -66,17 +90,5 @@ public class RealRemoteBaseScript : MonoBehaviour
             isTvOn = false;
         }
 
-    }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

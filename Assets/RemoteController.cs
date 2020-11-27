@@ -76,10 +76,16 @@ public class RemoteController : MonoBehaviour
     public GameObject remote;
     public float timeout = 0.1f;
     public float timeout_max = 0.1f;
+
     
     void Update()
     {
-        if (!hasRemote) return;
+        if (!hasRemote)
+        {
+            if (!Input.GetMouseButtonDown(1)) return;
+            RealRemoteBaseScript.Return();
+            return;
+        }
         if (timeout >= 0)
         {
             timeout -= Time.deltaTime;

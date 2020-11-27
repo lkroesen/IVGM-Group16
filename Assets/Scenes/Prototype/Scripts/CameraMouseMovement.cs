@@ -14,10 +14,15 @@ public class CameraMouseMovement : MonoBehaviour
     
     // Useful when switching to the "Puzzle Mode" so that the user doesn't move the camera when interacting with the puzzle.
     public bool Disable_Camera_Movement = false;
+
+    public float zoomSpeed;
+
+    private Camera _cam;
     
     // Ensures the cursor is visible, as the camera is always present in the scene, this code will always run.
     void Start()
     {
+        _cam = GetComponent<Camera>();
         Cursor.visible = true;
         
         // Maybe enable so that the mouse will stay confined to the screen (annoyance with multiple screens).
@@ -38,6 +43,19 @@ public class CameraMouseMovement : MonoBehaviour
         // Disables camera movment
         if (Disable_Camera_Movement) return;
 
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            if (_cam.fieldOfView >= 60)
+                return;
+            _cam.fieldOfView += zoomSpeed;
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            if (_cam.fieldOfView <= 30)
+                return;
+            _cam.fieldOfView -= zoomSpeed;
+        }
+        
         // Camera can only move when the left mouse button has been pressed
         if (!Input.GetMouseButton(0)) return;
 
