@@ -40,9 +40,6 @@ public class CameraMouseMovement : MonoBehaviour
     // Main Camera Movement Logic
     void Update()
     {
-        // Disables camera movment
-        if (Disable_Camera_Movement) return;
-
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             if (_cam.fieldOfView >= 60)
@@ -55,6 +52,9 @@ public class CameraMouseMovement : MonoBehaviour
                 return;
             _cam.fieldOfView -= zoomSpeed;
         }
+        
+        // Disables camera movment
+        if (Disable_Camera_Movement) return;
         
         // Camera can only move when the left mouse button has been pressed
         if (!Input.GetMouseButton(0)) return;
