@@ -6,7 +6,7 @@ using UnityEngine;
 public class PickupRemote : MonoBehaviour
 {
     public GameObject staticRemote;
-    public RemoteController _RemoteController;
+    private RemoteController _RemoteController;
 
     public void Start()
     {

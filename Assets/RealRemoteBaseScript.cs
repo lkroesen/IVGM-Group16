@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class RealRemoteBaseScript : MonoBehaviour
 {
     public GameObject tv;
+    public GameObject over_tv;
     
     public void registerButtonClick(string value)
     {
@@ -76,6 +77,10 @@ public class RealRemoteBaseScript : MonoBehaviour
 
     void powerButton()
     {
+        over_tv.SetActive(isTvOn);
+        isTvOn = !isTvOn;
+        
+        /*
         var meshRenderer = tv.GetComponent<MeshRenderer>();
         var material = meshRenderer.material;
 
@@ -89,6 +94,6 @@ public class RealRemoteBaseScript : MonoBehaviour
             material.SetColor(COLOR, Color.black);
             isTvOn = false;
         }
-
+        */
     }
 }
