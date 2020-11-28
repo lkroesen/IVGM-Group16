@@ -77,13 +77,22 @@ public class RemoteController : MonoBehaviour
     public float timeout = 0.1f;
     public float timeout_max = 0.1f;
 
+    private GameObject tutorial_text;
     
+    private void Start()
+    {
+        tutorial_text = GameObject.FindGameObjectWithTag("TUTORIAL");
+    }
+
+
     void Update()
     {
         if (!hasRemote)
         {
+            // TODO: Move this logic to some seperate controls script!
             if (!Input.GetMouseButtonDown(1)) return;
             RealRemoteBaseScript.Return();
+            tutorial_text.SetActive(false);
             return;
         }
         if (timeout >= 0)

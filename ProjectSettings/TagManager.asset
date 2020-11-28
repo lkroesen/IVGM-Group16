@@ -7,6 +7,7 @@ TagManager:
   - POSITION
   - PIECE
   - REMOTE
+  - TUTORIAL
   layers:
   - Default
   - TransparentFX
