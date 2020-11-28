@@ -15,9 +15,17 @@ public class movePiece : MonoBehaviour
 
     private bool inCollider = false;
 
+    public grid grid_;
+
+    public int right_pos;
+
+    private int seat_pos;
+
     // Start is called before the first frame update
     void Start()
     {
+      //print(grid_.positioned[2]);
+      //grid_.positioned[2]=true;
       //rigidboy = (Rigidbody) GetComponent(typeof(Rigidbody));
       // So that forces do not change our rigidboy
       //rigidboy.constraints = RigidbodyConstraints.FreezeAll;
@@ -45,6 +53,14 @@ public class movePiece : MonoBehaviour
         if(inCollider == true){
           transform.position = collider_pos;
           inCollider = false;
+
+          if(seat_pos==right_pos){
+            grid_.positioned[right_pos-1]=true;
+            print(seat_pos);
+          }
+          else{
+            grid_.positioned[right_pos-1]=false;
+          }
         }
     }
 
@@ -66,7 +82,7 @@ public class movePiece : MonoBehaviour
         var diff_x = Input.mousePosition.x - lastMousePoint_x.Value;
         var diff_y = Input.mousePosition.y - lastMousePoint_y.Value;
         var position = transform.position;
-        position = new Vector3(position.x + 5*diff_x*Time.deltaTime, position.y, position.z + 5*diff_y * Time.deltaTime);
+        position = new Vector3(position.x - 5*diff_x*Time.deltaTime, position.y, position.z - 5*diff_y * Time.deltaTime);
         transform.position = position;
         lastMousePoint_y = Input.mousePosition.y;
         lastMousePoint_x = Input.mousePosition.x;
@@ -81,6 +97,7 @@ public class movePiece : MonoBehaviour
       else{
         inCollider = true;
         collider_pos = other.transform.position;
+        seat_pos = other.GetComponent<seat>().pos;
       }
     }
 
@@ -93,6 +110,7 @@ public class movePiece : MonoBehaviour
       else{
         inCollider = true;
         collider_pos = other.transform.position;
+        seat_pos = other.GetComponent<seat>().pos;
       }
     }
 
@@ -105,6 +123,7 @@ public class movePiece : MonoBehaviour
       else{
         inCollider = false;
         collider_pos = other.transform.position;
+        grid_.positioned[right_pos-1]=false;
       }
     }
 }
