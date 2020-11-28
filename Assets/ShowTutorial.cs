@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class ShowTutorial : MonoBehaviour
 {
-    private void OnMouseUpAsButton()
+    public GameObject tutorial;
+
+    private void OnMouseUp()
     {
-        
+        tutorial.SetActive(true);
     }
 }
