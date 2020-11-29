@@ -27,6 +27,7 @@ public class Waypoint : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
+        if (tutorial_text == null) return;
         if (tutorial_text.activeSelf) return;
         
         
