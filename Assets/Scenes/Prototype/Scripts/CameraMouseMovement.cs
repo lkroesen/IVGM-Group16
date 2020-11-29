@@ -68,7 +68,7 @@ public class CameraMouseMovement : MonoBehaviour
         var velocity = Time.deltaTime * speed;
         
         // Create movement based on mouse
-        var xmove = Input.GetAxisRaw("Mouse X") * velocity;
+        var xmove = Input.GetAxisRaw("Mouse X") * -velocity;
         var ymove = Input.GetAxisRaw("Mouse Y") * velocity;
 
         // Calculate new angles
