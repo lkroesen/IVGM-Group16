@@ -8,7 +8,8 @@ public class Waypoint : MonoBehaviour
     private WaypointManager _wpm;
     private CameraMouseMovement _cmm;
     private PuzzleManager _pm;
-
+    private GameObject tutorial_text;
+    
     public bool isJigSawWaypoint = false;
 
     // Start is called before the first frame update
@@ -20,10 +21,14 @@ public class Waypoint : MonoBehaviour
         _wpm = controller.GetComponent<WaypointManager>();
         _pm = controller.GetComponent<PuzzleManager>();
         _cmm = _cam.GetComponent<CameraMouseMovement>();
+        tutorial_text = GameObject.FindGameObjectWithTag("TUTORIAL");
+        
     }
 
     private void OnMouseUpAsButton()
     {
+        if (tutorial_text.activeSelf) return;
+        
         
         if (isJigSawWaypoint)
         {
