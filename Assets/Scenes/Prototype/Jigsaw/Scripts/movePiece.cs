@@ -1,57 +1,60 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class movePiece : MonoBehaviour
 {
-
-    public bool activePiece = false;
-
-    public Rigidbody rigidboy;
-
-    public Vector3 init_pos;
-
     private Vector3 collider_pos;
 
     private bool inCollider = false;
 
     public float speed = 0.1f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-      //rigidboy = (Rigidbody) GetComponent(typeof(Rigidbody));
-      // So that forces do not change our rigidboy
-      //rigidboy.constraints = RigidbodyConstraints.FreezeAll;
-    }
-
+    private Rigidbody _rigidbody;
+    
     // Update is called once per frame
     private float? lastMousePoint_x = null;
     private float? lastMousePoint_y = null;
-    void Update()
+
+    private Vector3 actual_location;
+    private Vector3 difference;
+
+    private void Start()
     {
-        if (!activePiece) return;
-        movePieceXY();
+        _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
     }
 
-    private void OnMouseDown()
+    void OnMouseDown()
     {
-        // Store Position so that when the car collides it returns to its inital position.
-        init_pos = transform.position;
-        activePiece = true;
+        var position = transform.position;
+        if (Camera.main == null) return;
+        actual_location = Camera.main.WorldToScreenPoint(position);
+        difference = position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+            Input.mousePosition.y, actual_location.z));
+    }
+		
+    void OnMouseDrag()
+    {
+        var cursorPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, actual_location.z);
+        if (Camera.main == null) return;
+        var cursorPosition = Camera.main.ScreenToWorldPoint(cursorPoint) + difference;
+        transform.position = cursorPosition;
     }
 
     private void OnMouseUp()
     {
-        activePiece = false;
-        if(inCollider == true){
-          transform.position = collider_pos;
-          inCollider = false;
-        }
+        if (inCollider != true) return;
+        transform.position = collider_pos;
+        inCollider = false;
     }
 
+    [Obsolete("This method is for giving an object speed rather than conforming to a mouse position")]
     private void movePieceXY()
     {
+        
         if (Input.GetMouseButtonDown(0))
         {
           lastMousePoint_x = Input.mousePosition.x;
@@ -76,7 +79,7 @@ public class movePiece : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-      if (other.tag == "PIECE")
+      if (other.CompareTag("PIECE"))
       {
           Physics.IgnoreCollision(other, GetComponent<Collider>());
       }
@@ -88,7 +91,7 @@ public class movePiece : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-      if (other.tag == "PIECE")
+      if (other.CompareTag("PIECE"))
       {
           Physics.IgnoreCollision(other, GetComponent<Collider>());
       }
@@ -100,7 +103,7 @@ public class movePiece : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-      if (other.tag == "PIECE")
+      if (other.CompareTag("PIECE"))
       {
           Physics.IgnoreCollision(other, GetComponent<Collider>());
       }
