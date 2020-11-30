@@ -75,14 +75,14 @@ public class RushHourPiece : MonoBehaviour
                 
                 // Tolerance to keep some distance between the objects
                 // (Because without this the Raycast goes through the object we detected)
-                distance *= 0.95f;
+                distance *= 0.99f;
                 
                 // Set the limit based on the distance from the x-origin and the distance.
                 limit[1] = (transform.position.x + distance);
             }
             else
             {
-                limit[1] = null;
+                limit[1] = Mathf.Infinity;
             }
         }
         else
