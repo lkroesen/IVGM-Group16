@@ -8,6 +8,8 @@ TagManager:
   - PIECE
   - REMOTE
   - TUTORIAL
+  - bp_Wall
+  - bp_piece
   layers:
   - Default
   - TransparentFX

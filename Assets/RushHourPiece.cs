@@ -3,41 +3,135 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Bug in this code I'm aware off:
+ * - Pieces can move through objects that are only halfway in the way,
+ * however, I could fix this, by doing the raycasts from the outter sides, however,
+ * I do not think this will affect any puzzle solution, so I'm keeping it in.
+ */
+
 public class RushHourPiece : MonoBehaviour
 {
-    private Vector3 collider_pos;
+    public float?[] limit = new float?[2];
+    
     private Rigidbody _rigidbody;
 
     private Vector3 actual_location;
     private Vector3 difference;
 
-    public float unstuck_speed;
     public bool vertical_piece;
-
-    private bool active = false;
-    private bool unstucking = false;
-    private bool hit = false;
-
-    private float direction;
-
-    private BatteryPuzzleManager _bpm;
     
+
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-        _bpm = transform.parent.gameObject.GetComponent<BatteryPuzzleManager>();
     }
 
-    private void OnMouseUp()
+    float distanceBetween(float a, float b)
     {
-        active = false;
+        return Mathf.Abs(a - b);
     }
 
-    void OnMouseDown()
+    void setLimits()
     {
-        active = true;
-        _bpm.canMove = true;
+        int layerMask = 1 << 8;
+        layerMask = ~layerMask;
+        
+        if (vertical_piece)
+        {
+            Physics.Raycast(transform.position, Vector3.left, out var hit, Mathf.Infinity, layerMask);
+
+            if (hit.collider == null) limit[0] = Mathf.NegativeInfinity;
+            else if (hit.collider.CompareTag("bp_piece"))
+            {
+                Physics.Raycast(hit.point, Vector3.right, out var ret_hit, Mathf.Infinity,
+                    layerMask);
+                
+                var distance = distanceBetween(hit.point.x, ret_hit.point.x);
+                distance *= 0.95f;
+                
+                limit[0] = (transform.position.x - distance);
+            }
+            else
+            {
+                limit[0] = Mathf.NegativeInfinity;
+            }
+            
+            Physics.Raycast(transform.position, Vector3.right, out var _hit, Mathf.Infinity, layerMask);
+
+            if (_hit.collider == null) limit[1] = Mathf.Infinity;
+            else if (_hit.collider.CompareTag("bp_piece"))
+            {
+                // Calculate the actual distance between the outsides of the two objects.
+                
+                // We found the first side of the cube with the first Raycast, now we raycast back from
+                // the object into our original object to find out the object's edge
+                Physics.Raycast(_hit.point, Vector3.left, out var ret_hit, Mathf.Infinity,
+                    layerMask);
+                
+                // Calculate the distance between our two hit points
+                var distance = distanceBetween(_hit.point.x, ret_hit.point.x);
+                
+                // Tolerance to keep some distance between the objects
+                // (Because without this the Raycast goes through the object we detected)
+                distance *= 0.95f;
+                
+                // Set the limit based on the distance from the x-origin and the distance.
+                limit[1] = (transform.position.x + distance);
+            }
+            else
+            {
+                limit[1] = null;
+            }
+        }
+        else
+        {
+            Physics.Raycast(transform.position, Vector3.forward, out var hit, Mathf.Infinity, layerMask);
+
+            if (hit.collider == null) limit[0] = Mathf.Infinity;
+            else if (hit.collider.CompareTag("bp_piece"))
+            {
+                Physics.Raycast(hit.point, Vector3.back, out var ret_hit, Mathf.Infinity,
+                    layerMask);
+                
+                var distance = distanceBetween(hit.point.z, ret_hit.point.z);
+                distance *= 0.95f;
+                
+                limit[0] = (transform.position.z + distance);
+            }
+            else
+            {
+                limit[0] = Mathf.Infinity;
+            }
+            
+            Physics.Raycast(transform.position, Vector3.back, out var _hit, Mathf.Infinity, layerMask);
+            
+            if (_hit.collider == null) limit[1] = Mathf.NegativeInfinity;
+            else if (_hit.collider.CompareTag("bp_piece"))
+            {
+                
+                
+                Physics.Raycast(_hit.point, Vector3.forward, out var ret_hit, Mathf.Infinity,
+                    layerMask);
+                
+                var distance = distanceBetween(_hit.point.z, ret_hit.point.z);
+                distance *= 0.95f;
+                
+                limit[1] = (transform.position.z - distance);
+            }
+            else
+            {
+                limit[1] = Mathf.NegativeInfinity;
+            }
+        }
+        
+        Debug.Log("Limit: " + limit[0] + " <> " + limit[1]);
+    }
+
+    private void OnMouseDown()
+    {
+        setLimits();
         
         var position = transform.position;
         if (Camera.main == null) return;
@@ -46,85 +140,28 @@ public class RushHourPiece : MonoBehaviour
         difference = position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
             Input.mousePosition.y, actual_location.z));
     }
-		
-    void OnMouseDrag()
-    {
-        if (!_bpm.canMove) return;
-        if (hit) return;
-        if (unstucking) return;
 
-        var cursorPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, actual_location.z);
+    private void OnMouseDrag()
+    {
+var cursorPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, actual_location.z);
         if (Camera.main == null) return;
         var cursorPosition = Camera.main.ScreenToWorldPoint(cursorPoint) + difference;
 
         cursorPosition.x = vertical_piece ? cursorPosition.x : transform.position.x;
         cursorPosition.z = vertical_piece ? transform.position.z : cursorPosition.z;
         cursorPosition.y = transform.position.y;
-
-        var mov = transform.position - cursorPosition;
-        direction = vertical_piece ? mov.x : mov.z;  
         
-        transform.position = cursorPosition;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
+        
         if (vertical_piece)
         {
-            if (direction < 0.0)
-            {
-                Debug.Log("Moved forewards");
-            }
-            else if (direction > 0.0)
-            {
-                Debug.Log("Moved backwards");
-            }
-            else
-            {
-                Debug.Log("We got hit");
-            }
+            if (!(cursorPosition.x <= limit[1]) || !(cursorPosition.x >= limit[0])) return;
+            transform.position = cursorPosition;
         }
         else
         {
-            if (direction > 0.0)
-            {
-                Debug.Log("Moved forewards");
-            }
-            else if (direction < 0.0)
-            {
-                Debug.Log("Moved backwards");
-            }
-            else
-            {
-                Debug.Log("We got hit");
-            }
+            if (!(cursorPosition.z >= limit[1]) || !(cursorPosition.z <= limit[0])) return;
+            transform.position = cursorPosition;
         }
-        
-        hit = true;
     }
 
-    private void OnMouseOver()
-    {
-        if (!active)
-            _bpm.canMove = false;
-
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        hit = false;
-        unstucking = false;
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        unstucking = true;
-        
-        var unstuck = transform.position;
-
-        unstuck.x += vertical_piece ? direction * Time.deltaTime * unstuck_speed : 0;
-        unstuck.z += vertical_piece ? 0 : direction * Time.deltaTime * unstuck_speed;
-        
-        transform.position = unstuck;
-    }
 }
