@@ -12,7 +12,7 @@ using UnityEngine;
 
 public class RushHourPiece : MonoBehaviour
 {
-    public float?[] limit = new float?[2];
+    public float[] limit = new float[2];
     
     private Rigidbody _rigidbody;
 
@@ -125,8 +125,6 @@ public class RushHourPiece : MonoBehaviour
                 limit[1] = Mathf.NegativeInfinity;
             }
         }
-        
-        Debug.Log("Limit: " + limit[0] + " <> " + limit[1]);
     }
 
     private void OnMouseDown()
@@ -141,25 +139,37 @@ public class RushHourPiece : MonoBehaviour
             Input.mousePosition.y, actual_location.z));
     }
 
+    private void OnMouseUp()
+    {
+        setLimits();
+    }
+
     private void OnMouseDrag()
     {
-var cursorPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, actual_location.z);
+        var cursorPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, actual_location.z);
         if (Camera.main == null) return;
         var cursorPosition = Camera.main.ScreenToWorldPoint(cursorPoint) + difference;
 
         cursorPosition.x = vertical_piece ? cursorPosition.x : transform.position.x;
         cursorPosition.z = vertical_piece ? transform.position.z : cursorPosition.z;
         cursorPosition.y = transform.position.y;
-        
-        
+
         if (vertical_piece)
         {
-            if (!(cursorPosition.x <= limit[1]) || !(cursorPosition.x >= limit[0])) return;
+            // If the cursor goes further than the block can go, set the block to be at the edge.
+            if (!(cursorPosition.x <= limit[1]))
+                cursorPosition.x = limit[1];
+            else if (!(cursorPosition.x >= limit[0]))
+                cursorPosition.x = limit[0];
             transform.position = cursorPosition;
         }
         else
         {
-            if (!(cursorPosition.z >= limit[1]) || !(cursorPosition.z <= limit[0])) return;
+            //if (!(cursorPosition.z >= limit[1]) || !(cursorPosition.z <= limit[0])) return;
+            if (!(cursorPosition.z >= limit[1]))
+                cursorPosition.z = limit[1];
+            else if (!(cursorPosition.z <= limit[0]))
+                cursorPosition.z = limit[0];
             transform.position = cursorPosition;
         }
     }
