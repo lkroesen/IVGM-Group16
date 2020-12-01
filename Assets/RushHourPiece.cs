@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 /*
@@ -13,6 +14,9 @@ using UnityEngine;
 public class RushHourPiece : MonoBehaviour
 {
     public float[] limit = new float[2];
+
+    public bool isLeftBattery;
+    private bool isRightBattery;
     
     private Rigidbody _rigidbody;
 
@@ -20,10 +24,53 @@ public class RushHourPiece : MonoBehaviour
     private Vector3 difference;
 
     public bool vertical_piece;
+
+    private float xScale;
+    private float zScale;
+
+    private Vector3 stored_pos;
+
+    private bool colliding = false;
+
+
+    private void OnCollisionStay(Collision other)
+    {
+        if (isLeftBattery)
+            if (other.collider.gameObject.CompareTag("bp_goal"))
+            {
+                return;
+            }
+
+        colliding = true;
+        transform.position = stored_pos;
+    }
     
+    private void OnCollisionEnter(Collision other)
+    {
+        if (isLeftBattery)
+            if (other.collider.gameObject.CompareTag("bp_goal"))
+            {
+                return;
+            }
+        
+        colliding = true;
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (isLeftBattery)
+            if (other.collider.gameObject.CompareTag("bp_goal"))
+            {
+                return;
+            }
+        colliding = false;
+    }
 
     private void Start()
     {
+        stored_pos = transform.position;
+        xScale = transform.localScale.x;
+        zScale = transform.localScale.z;
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
     }
@@ -33,6 +80,91 @@ public class RushHourPiece : MonoBehaviour
         return Mathf.Abs(a - b);
     }
 
+    float vectCount(Vector3 input)
+    {
+        return input.x + input.y + input.z;
+    }
+
+    /**
+     * Casts ray in direction from an origin, returns the distance between the origin object and the first hit object,
+     * if no object it returns infinity in the direction cast.
+     *
+     * useX to signify direction.
+     */
+    float castRay(Vector3 origin, Vector3 direction, bool useX)
+    {
+        var layerMask = 1 << 8;
+        layerMask = ~layerMask;
+
+        var vEffective = vectCount(direction);
+        
+        Physics.Raycast(origin, direction, out var hit, Mathf.Infinity, layerMask);
+
+        if (hit.collider == null) return vEffective <= -1 ? Mathf.NegativeInfinity : Mathf.Infinity;
+
+        if (!hit.collider.CompareTag("bp_piece")) return vEffective <= -1 ? Mathf.NegativeInfinity : Mathf.Infinity;
+        
+        // Calculate the actual distance between the outsides of the two objects.
+                
+        // We found the first side of the cube with the first Raycast, now we raycast back from
+        // the object into our original object to find out the object's edge
+        Physics.Raycast(hit.point, -1 * direction, out var ret_hit, Mathf.Infinity,
+            layerMask);
+            
+        // Calculate the distance between our two hit points  
+        var distance = 0f;
+        distance = useX ? distanceBetween(hit.point.x, ret_hit.point.x) : distanceBetween(hit.point.z, ret_hit.point.z);
+        
+        // Tolerance to keep some distance between the objects
+        // (Because without this the Raycast goes through the object we detected)
+        distance *= 0.95f;
+            
+        // Set the limit based on the distance from the x-origin and the distance.
+        var position = transform.position;
+        return useX ? position.x + (distance * vEffective): position.z + (distance * vEffective);
+    }
+
+    float multipleRays(Vector3 origin, Vector3 direction, bool useX)
+    {
+        Vector3 upper_origin;
+        float upper_distance;
+        Vector3 lower_origin;
+        float lower_distance;
+        float distance;
+        var vEffective = vectCount(direction);
+        
+        if (useX)
+        {
+            upper_origin = origin;
+            upper_origin.z += zScale / 2.0f;
+
+            upper_distance = castRay(upper_origin, direction, true);
+            
+            lower_origin = origin;
+            lower_origin.z -= zScale / 2.0f;
+
+            lower_distance = castRay(lower_origin, direction, true);
+
+            distance = castRay(origin, direction, true);
+
+            return vEffective <= -1 ? Mathf.Max(Math.Max(upper_distance, lower_distance), distance) : Math.Min(Math.Min(upper_distance, lower_distance), distance);
+        }
+
+        upper_origin = origin;
+        upper_origin.x += xScale / 2.0f;
+
+        upper_distance = castRay(upper_origin, direction, false);
+            
+        lower_origin = origin;
+        lower_origin.x -= xScale / 2.0f;
+
+        lower_distance = castRay(lower_origin, direction, false);
+
+        distance = castRay(origin, direction, false);
+
+        return vEffective <= -1 ? Mathf.Max(Math.Max(upper_distance, lower_distance), distance) : Math.Min(Math.Min(upper_distance, lower_distance), distance);
+    }
+    
     void setLimits()
     {
         int layerMask = 1 << 8;
@@ -40,95 +172,40 @@ public class RushHourPiece : MonoBehaviour
         
         if (vertical_piece)
         {
-            Physics.Raycast(transform.position, Vector3.left, out var hit, Mathf.Infinity, layerMask);
+            // Casts rays from 3 locations to ensure maximum detection
+            /* If any ray hits an object it means we can only move to the maximum of that location
+             *     V-- Use this limit
+             *     | ----|        |-------- inf
+             * |---------| origin |-----|
+             * inf-------|        |-----|
+             *                          ^-- Use this limit
+             */
 
-            if (hit.collider == null) limit[0] = Mathf.NegativeInfinity;
-            else if (hit.collider.CompareTag("bp_piece"))
-            {
-                Physics.Raycast(hit.point, Vector3.right, out var ret_hit, Mathf.Infinity,
-                    layerMask);
-                
-                var distance = distanceBetween(hit.point.x, ret_hit.point.x);
-                distance *= 0.95f;
-                
-                limit[0] = (transform.position.x - distance);
-            }
-            else
-            {
-                limit[0] = Mathf.NegativeInfinity;
-            }
-            
-            Physics.Raycast(transform.position, Vector3.right, out var _hit, Mathf.Infinity, layerMask);
+            limit[0] = multipleRays(transform.position, Vector3.left, true);//castRay(transform.position, Vector3.left, true);
 
-            if (_hit.collider == null) limit[1] = Mathf.Infinity;
-            else if (_hit.collider.CompareTag("bp_piece"))
-            {
-                // Calculate the actual distance between the outsides of the two objects.
-                
-                // We found the first side of the cube with the first Raycast, now we raycast back from
-                // the object into our original object to find out the object's edge
-                Physics.Raycast(_hit.point, Vector3.left, out var ret_hit, Mathf.Infinity,
-                    layerMask);
-                
-                // Calculate the distance between our two hit points
-                var distance = distanceBetween(_hit.point.x, ret_hit.point.x);
-                
-                // Tolerance to keep some distance between the objects
-                // (Because without this the Raycast goes through the object we detected)
-                distance *= 0.99f;
-                
-                // Set the limit based on the distance from the x-origin and the distance.
-                limit[1] = (transform.position.x + distance);
-            }
-            else
-            {
-                limit[1] = Mathf.Infinity;
-            }
+            limit[1] = multipleRays(transform.position, Vector3.right, true);
         }
         else
         {
-            Physics.Raycast(transform.position, Vector3.forward, out var hit, Mathf.Infinity, layerMask);
-
-            if (hit.collider == null) limit[0] = Mathf.Infinity;
-            else if (hit.collider.CompareTag("bp_piece"))
-            {
-                Physics.Raycast(hit.point, Vector3.back, out var ret_hit, Mathf.Infinity,
-                    layerMask);
-                
-                var distance = distanceBetween(hit.point.z, ret_hit.point.z);
-                distance *= 0.95f;
-                
-                limit[0] = (transform.position.z + distance);
-            }
-            else
-            {
-                limit[0] = Mathf.Infinity;
-            }
-            
-            Physics.Raycast(transform.position, Vector3.back, out var _hit, Mathf.Infinity, layerMask);
-            
-            if (_hit.collider == null) limit[1] = Mathf.NegativeInfinity;
-            else if (_hit.collider.CompareTag("bp_piece"))
-            {
-                
-                
-                Physics.Raycast(_hit.point, Vector3.forward, out var ret_hit, Mathf.Infinity,
-                    layerMask);
-                
-                var distance = distanceBetween(_hit.point.z, ret_hit.point.z);
-                distance *= 0.95f;
-                
-                limit[1] = (transform.position.z - distance);
-            }
-            else
-            {
-                limit[1] = Mathf.NegativeInfinity;
-            }
+            limit[0] = castRay(transform.position, Vector3.forward, false);
+            limit[1] = castRay(transform.position, Vector3.back, false);
         }
+    }
+
+    private float timeout = 0.3f;
+    public float timeout_max = 0.3f;
+    
+    private void Update()
+    {
+        timeout -= Time.deltaTime;
+        
     }
 
     private void OnMouseDown()
     {
+        if (timeout >= 0) return;
+        timeout = timeout_max;
+
         setLimits();
         
         var position = transform.position;
@@ -141,7 +218,8 @@ public class RushHourPiece : MonoBehaviour
 
     private void OnMouseUp()
     {
-        setLimits();
+        if (!colliding)
+            stored_pos = transform.position;
     }
 
     private void OnMouseDrag()
