@@ -4,5 +4,4 @@ using UnityEngine;
 
 public class BatteryPuzzleManager : MonoBehaviour
 {
-    public bool canMove = true;
 }

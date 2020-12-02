@@ -11,6 +11,8 @@ TagManager:
   - bp_Wall
   - bp_piece
   - bp_goal
+  - bp_goal_l
+  - bp_goal_r
   layers:
   - Default
   - TransparentFX

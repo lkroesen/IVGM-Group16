@@ -16,7 +16,8 @@ public class RushHourPiece : MonoBehaviour
     public float[] limit = new float[2];
 
     public bool isLeftBattery;
-    private bool isRightBattery;
+    public bool isRightBattery;
+    private bool reachedGoal = false;
     
     private Rigidbody _rigidbody;
 
@@ -240,6 +241,11 @@ public class RushHourPiece : MonoBehaviour
             else if (!(cursorPosition.x >= limit[0]))
                 cursorPosition.x = limit[0];
             transform.position = cursorPosition;
+            
+            if (isLeftBattery || isRightBattery)
+            {
+                checkGoalReached();
+            }
         }
         else
         {
@@ -250,6 +256,28 @@ public class RushHourPiece : MonoBehaviour
                 cursorPosition.z = limit[0];
             transform.position = cursorPosition;
         }
+    }
+
+    public GameObject goal_indicator;
+
+    private void checkGoalReached()
+    {
+        if (reachedGoal) return;
+        
+        if (isLeftBattery)
+        {
+            if (!(transform.position.x > goal_indicator.transform.position.x)) return;
+            reachedGoal = true;
+            Debug.Log("Left Battery Reached the goal!");
+        }
+        else
+        {
+            if (!(transform.position.x < goal_indicator.transform.position.x)) return;
+            reachedGoal = true;
+            Debug.Log("Right Battery Reached the goal!");
+        }
+
+        
     }
 
 }
