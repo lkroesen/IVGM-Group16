@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,7 +70,15 @@ public class RealRemoteBaseScript : MonoBehaviour
     {
         _cmm.Disable_Camera_Movement = false;
         var _pm = gamecontroller.GetComponent<PuzzleManager>();
+
+        if (_pm.bPuzzleActive)
+        {
+            _pm.bPuzzleActive = false;
+            _pm.syncBPuzzle();
+        }
+        
         _pm.showExterior();
+
     }
 
     public bool isTvOn = false;

@@ -20,6 +20,7 @@ public class RushHourPiece : MonoBehaviour
     private bool reachedGoal = false;
     
     private Rigidbody _rigidbody;
+    private BatteryPuzzleManager _bpm;
 
     private Vector3 actual_location;
     private Vector3 difference;
@@ -33,9 +34,14 @@ public class RushHourPiece : MonoBehaviour
 
     private bool colliding = false;
 
-
     private void OnCollisionStay(Collision other)
     {
+        if (_bpm.moveOut || _bpm.savePositions)
+        {
+            stored_pos = transform.position;
+            return;
+        }
+        
         if (isLeftBattery)
             if (other.collider.gameObject.CompareTag("bp_goal"))
             {
@@ -69,6 +75,8 @@ public class RushHourPiece : MonoBehaviour
 
     private void Start()
     {
+        _bpm = transform.parent.transform.parent.transform.parent.GetComponent<BatteryPuzzleManager>();
+        
         stored_pos = transform.position;
         xScale = transform.localScale.x;
         zScale = transform.localScale.z;
@@ -199,6 +207,11 @@ public class RushHourPiece : MonoBehaviour
     private void Update()
     {
         timeout -= Time.deltaTime;
+
+        if (_bpm.savePositions)
+        {
+            stored_pos = transform.position;
+        }
         
     }
 
