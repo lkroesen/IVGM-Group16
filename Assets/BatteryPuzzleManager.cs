@@ -14,12 +14,25 @@ public class BatteryPuzzleManager : MonoBehaviour
     private bool hasMoved = false;
 
     private GameObject wp;
+
+    private PuzzleManager _pm;
     
     private void Start()
     {
         wp = GameObject.FindGameObjectWithTag("bp_wp");
+        _pm = GameObject.FindGameObjectWithTag("Player").GetComponent<PuzzleManager>();
     }
 
+    public void leftBatteryObtain()
+    {
+        _pm.obtainBattery();
+    }
+
+    public void rightBatteryObtain()
+    {
+        _pm.obtainBattery();
+    }
+    
     private void Update()
     {
         if (moveOut && !hasMoved)

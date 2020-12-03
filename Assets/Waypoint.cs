@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public enum Waypoints
 {
-    Normal, JigSaw, BPuzzle, BPuzzlePre
+    Normal, JigSaw, BPuzzle, BPuzzlePre, Safe
 }
 
 public class Waypoint : MonoBehaviour
@@ -14,12 +15,9 @@ public class Waypoint : MonoBehaviour
     private CameraMouseMovement _cmm;
     private PuzzleManager _pm;
     private GameObject tutorial_text;
-
-    public Waypoints waypoint;
+    private UI_Text_Handler _uth;
     
-    public bool isJigSawWaypoint = false;
-    public bool isBPuzzlePreWaypoint = false;
-    public bool isBPuzzleWaypoint = false;
+    public Waypoints waypoint;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +27,7 @@ public class Waypoint : MonoBehaviour
         var controller = GameObject.FindGameObjectWithTag("Player");
         _wpm = controller.GetComponent<WaypointManager>();
         _pm = controller.GetComponent<PuzzleManager>();
+        _uth = controller.GetComponent<UI_Text_Handler>();
         _cmm = _cam.GetComponent<CameraMouseMovement>();
         tutorial_text = GameObject.FindGameObjectWithTag("TUTORIAL");
     }
@@ -39,8 +38,25 @@ public class Waypoint : MonoBehaviour
         _pm.hideExterior();
     }
 
+    private void jigsaw()
+    {
+        if (_uth.jigsawVisits == 0)
+            _uth.JigsawText();
+
+        _uth.jigsawVisits++;
+        
+        puzzlePre();
+    }
+
     private void bPuzzle()
     {
+        if (_uth.bpuzzleVisists == 0)
+        {
+            
+        }
+        
+        _uth.bpuzzleVisists++;
+        
         puzzlePre();
         _pm.bPuzzleActive = true;
     }
@@ -48,6 +64,16 @@ public class Waypoint : MonoBehaviour
     private void bpuzzlePrep()
     {
         
+    }
+
+    private void safe()
+    {
+        if (_uth.safeVisits == 0)
+        {
+            _uth.SafeText();
+        }
+        
+        _uth.safeVisits++;
     }
     
     private void OnMouseUpAsButton()
@@ -57,9 +83,10 @@ public class Waypoint : MonoBehaviour
 
         switch (waypoint)
         {
-            case Waypoints.JigSaw : puzzlePre(); break;
+            case Waypoints.JigSaw : jigsaw(); break;
             case Waypoints.BPuzzle : bPuzzle(); break;
             case Waypoints.BPuzzlePre : bpuzzlePrep(); break;
+            case Waypoints.Safe : safe(); break;
         }
 
         var parent = this.transform.parent;

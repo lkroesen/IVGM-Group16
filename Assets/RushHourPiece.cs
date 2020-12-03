@@ -281,13 +281,15 @@ public class RushHourPiece : MonoBehaviour
         {
             if (!(transform.position.x > goal_indicator.transform.position.x)) return;
             reachedGoal = true;
-            Debug.Log("Left Battery Reached the goal!");
+            _bpm.leftBatteryObtain();
+            Destroy(transform.gameObject);
         }
         else
         {
             if (!(transform.position.x < goal_indicator.transform.position.x)) return;
             reachedGoal = true;
-            Debug.Log("Right Battery Reached the goal!");
+            _bpm.rightBatteryObtain();
+            Destroy(transform.gameObject);
         }
 
         

@@ -250,6 +250,7 @@ MonoBehaviour:
   remote: {fileID: 8991031828239471837}
   timeout: 0.1
   timeout_max: 0.1
+  workingBatteries: 0
 --- !u!4 &68514591
 Transform:
   m_ObjectHideFlags: 0
@@ -307,8 +308,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d13b9117d34ec4884b145d97cd164f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jigsawVisits: 0
+  safeVisits: 0
+  bpuzzleVisists: 0
   currentTimeout: 0
   text: {fileID: 2009428937}
+  b00: 0
 --- !u!1 &83968770
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,9 +491,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoint: 2
-  isJigSawWaypoint: 0
-  isBPuzzlePreWaypoint: 0
-  isBPuzzleWaypoint: 1
 --- !u!65 &127296607
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2359,7 +2361,7 @@ Transform:
   m_GameObject: {fileID: 890687547}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: -0.7071068}
   m_LocalPosition: {x: 8.74, y: 3.11, z: -2.4}
-  m_LocalScale: {x: 3, y: 1, z: 1}
+  m_LocalScale: {x: 2.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1902125022}
   m_RootOrder: 3
@@ -2507,9 +2509,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoint: 0
-  isJigSawWaypoint: 0
-  isBPuzzlePreWaypoint: 0
-  isBPuzzleWaypoint: 0
 --- !u!65 &964075028
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3154,9 +3153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoint: 3
-  isJigSawWaypoint: 0
-  isBPuzzlePreWaypoint: 0
-  isBPuzzleWaypoint: 0
 --- !u!65 &1269567498
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3637,7 +3633,7 @@ Transform:
   m_GameObject: {fileID: 1456827414}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 7.07, y: 3.11, z: -3.4924903}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 1.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1902125022}
   m_RootOrder: 0
@@ -5107,9 +5103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoint: 1
-  isJigSawWaypoint: 1
-  isBPuzzlePreWaypoint: 0
-  isBPuzzleWaypoint: 0
 --- !u!1 &1902125021
 GameObject:
   m_ObjectHideFlags: 0
@@ -5590,10 +5583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f08f80341bbaeb48bc77c550510afa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoint: 0
-  isJigSawWaypoint: 0
-  isBPuzzlePreWaypoint: 0
-  isBPuzzleWaypoint: 0
+  waypoint: 4
 --- !u!65 &2067636045
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5684,7 +5674,7 @@ Transform:
   m_GameObject: {fileID: 2095745294}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 4.5, y: 3.11, z: -0.27}
-  m_LocalScale: {x: 3, y: 1, z: 1}
+  m_LocalScale: {x: 2.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1902125022}
   m_RootOrder: 1
@@ -5801,6 +5791,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2421334636984062966, guid: af36b1e836171f243905dea12eccee35,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.8
       objectReference: {fileID: 0}
     - target: {fileID: 2421334637476874276, guid: af36b1e836171f243905dea12eccee35,
         type: 3}

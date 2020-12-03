@@ -76,6 +76,8 @@ public class RemoteController : MonoBehaviour
     public float timeout = 0.1f;
     public float timeout_max = 0.1f;
 
+    public int workingBatteries = 0;
+    
     private GameObject tutorial_text;
     
     private void Start()
