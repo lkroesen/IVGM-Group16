@@ -16,7 +16,7 @@ public class UI_Text_Handler : MonoBehaviour
     {
         _text = text.GetComponent<Text>();
         
-        //showTextFor("I don't remember anything from last night,\nlet's see what the news has to say.", 9f);
+        showTextFor("I'd really like to watch some TV, now where did I leave that remote, it should be around here somewhere...", 9f);
     }
     
     
