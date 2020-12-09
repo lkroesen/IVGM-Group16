@@ -754,6 +754,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 1
+  grid_: {fileID: 426233551}
 --- !u!65 &207635459
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1000,6 +1002,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 10
+  grid_: {fileID: 426233551}
 --- !u!65 &237271934
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1231,6 +1235,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 9
+  grid_: {fileID: 426233551}
 --- !u!65 &276206713
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1463,6 +1469,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 16
+  grid_: {fileID: 426233551}
 --- !u!65 &389918799
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1587,6 +1595,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 12
+  grid_: {fileID: 426233551}
 --- !u!65 &400122231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1711,6 +1721,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 11
+  grid_: {fileID: 426233551}
 --- !u!65 &405761842
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2266,6 +2278,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 3
+  grid_: {fileID: 426233551}
 --- !u!65 &475740825
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3297,6 +3311,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 14
+  grid_: {fileID: 426233551}
 --- !u!65 &960835783
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3528,6 +3544,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 8
+  grid_: {fileID: 426233551}
 --- !u!65 &1029393776
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3646,12 +3664,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061737088}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb20e0c22c3891e4996e82ac265b0f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 4
+  grid_: {fileID: 426233551}
 --- !u!65 &1061737092
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3661,7 +3681,7 @@ BoxCollider:
   m_GameObject: {fileID: 1061737088}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -4183,6 +4203,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 6
+  grid_: {fileID: 426233551}
 --- !u!65 &1262942623
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4553,6 +4575,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 2
+  grid_: {fileID: 426233551}
 --- !u!65 &1434062727
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4769,6 +4793,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 15
+  grid_: {fileID: 426233551}
 --- !u!65 &1458480876
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5215,6 +5241,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 5
+  grid_: {fileID: 426233551}
 --- !u!65 &1619449768
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5446,6 +5474,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 13
+  grid_: {fileID: 426233551}
 --- !u!65 &1696052479
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5784,6 +5814,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  right_pos: 7
+  grid_: {fileID: 426233551}
 --- !u!65 &1948074144
 BoxCollider:
   m_ObjectHideFlags: 0
