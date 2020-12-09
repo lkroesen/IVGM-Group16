@@ -15,8 +15,8 @@ public class grid : MonoBehaviour
         for(int i=0; i<16; i++){
             positioned[i]=false;
         }
-        positioned[7]=true;
         positioned[3]=true;
+        //positioned[3]=true;
     }
 
     // Update is called once per frame

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - POSITION
   - PIECE
+  - KILLBOX
   layers:
   - Default
   - TransparentFX
