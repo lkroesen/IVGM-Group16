@@ -26,9 +26,7 @@ public class switch_script : MonoBehaviour
         four = GameObject.Find("4");       
         five = GameObject.Find("5");
         state = new bool[6] {true, false, false, false, false, false};    
-        done = false; 
-        light1.GetComponent<Light>().intensity = 0.1f;
-        light2.GetComponent<Light>().intensity = 0.1f;
+        done = false;
         activate();
     }
 
