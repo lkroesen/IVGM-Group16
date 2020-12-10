@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum Waypoints
 {
-    Normal, JigSaw, BPuzzle, BPuzzlePre, Safe
+    Normal, JigSaw, BPuzzle, BPuzzlePre, Safe, Fusebox
 }
 
 public class Waypoint : MonoBehaviour
@@ -68,12 +68,25 @@ public class Waypoint : MonoBehaviour
 
     private void safe()
     {
-        if (_uth.safeVisits == 0)
+        
+        bool isPainting = GameObject.Find("Painting").GetComponent<move_painting>().isdone();
+        print(isPainting);
+        if(!isPainting){
+            _uth.PaintingText();
+        }
+        else if (_uth.safeVisits == 0)
         {
             _uth.SafeText();
         }
         
         _uth.safeVisits++;
+    }
+
+    private void Fusebox(){
+        int state = GameObject.Find("Painting").GetComponent<switch_script>().getState();
+        if(state == 0){
+            
+        }
     }
     
     private void OnMouseUpAsButton()
@@ -87,6 +100,7 @@ public class Waypoint : MonoBehaviour
             case Waypoints.BPuzzle : bPuzzle(); break;
             case Waypoints.BPuzzlePre : bpuzzlePrep(); break;
             case Waypoints.Safe : safe(); break;
+            case Waypoints.Fusebox : Fusebox(); break;
         }
 
         var parent = this.transform.parent;
