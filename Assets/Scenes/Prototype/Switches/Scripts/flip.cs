@@ -12,7 +12,7 @@ public class flip : MonoBehaviour
         A = transform.parent.gameObject;
         scriptA = A.GetComponent<switch_script>();
         //Default angle
-        gameObject.transform.RotateAround(gameObject.transform.parent.position, Vector3.forward, -45.0f);
+        gameObject.transform.RotateAround(gameObject.transform.parent.position, Vector3.forward, 45.0f);
     }
 
     private void OnMouseDown() {
