@@ -24,7 +24,7 @@ public class move_painting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float delta = Time.deltaTime /4;
+        float delta = Time.deltaTime;
         if (slide){
             distance = distance + delta;
             if(distance < 1){

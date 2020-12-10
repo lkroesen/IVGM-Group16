@@ -112,11 +112,16 @@ public class RealRemoteBaseScript : MonoBehaviour
     public bool isTvOn = false;
     private static readonly int COLOR = Shader.PropertyToID("_Color");
 
+    public GameObject lights;
 
     void powerButton()
     {
+        print("Pressing powerbutton.");
         over_tv.SetActive(isTvOn);
         isTvOn = !isTvOn;
+
+        lights.GetComponent<lighting>().setAllLighting(0.1f);
+
         
         /*
         var meshRenderer = tv.GetComponent<MeshRenderer>();

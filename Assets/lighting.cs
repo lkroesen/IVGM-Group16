@@ -20,7 +20,6 @@ public class lighting : MonoBehaviour
             i += 1;
         }
 
-        setAllLighting(0.1f);
     }
 
     public void setAllLighting(float intensity){
