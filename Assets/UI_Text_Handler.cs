@@ -63,9 +63,19 @@ public class UI_Text_Handler : MonoBehaviour
         enqueueText("Hmm, looks like a jigsaw puzzle, wonder what shows up when I solve it", 5);
     }
 
+    public void PaintingText(){
+        enqueueText("This painting is so .......... inspiring .......", 5);
+    }
+
     public void SafeText()
     {
-        enqueueText("A safe, I can't seem to recall what I put in there, I'll need a 4 digit code to open it though", 6);
+        enqueueText("A safe! I can't remember what I put in there, but it seems to need a code...", 6);
+    }
+
+    public void FuseboxText(int state){
+        if(state == 0){
+            enqueueText("The power seems fine for now.", 4);
+        }
     }
 
     public void RemoteGet()
