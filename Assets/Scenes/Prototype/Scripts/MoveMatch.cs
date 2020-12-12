@@ -7,7 +7,7 @@ public class MoveMatch : MonoBehaviour
 
     public bool activePiece = false;
 
-    public Rigidbody rigidboy;
+    public Rigidbody _rigidbody;
 
     public Vector3 init_pos;
 
@@ -16,11 +16,10 @@ public class MoveMatch : MonoBehaviour
     private bool inCollider = false;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-      //rigidboy = (Rigidbody) GetComponent(typeof(Rigidbody));
-      // So that forces do not change our rigidboy
-      //rigidboy.constraints = RigidbodyConstraints.FreezeAll;
+        _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
     }
 
     // Update is called once per frame
