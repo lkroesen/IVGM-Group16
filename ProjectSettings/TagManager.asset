@@ -17,6 +17,7 @@ TagManager:
   - bp_goal_r
   - bp_shell
   - bp_wp
+  - bp_light
   layers:
   - Default
   - TransparentFX

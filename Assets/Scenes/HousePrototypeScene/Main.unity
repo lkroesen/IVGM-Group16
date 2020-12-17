@@ -282,6 +282,7 @@ MonoBehaviour:
   timeout: 0.1
   timeout_max: 0.1
   workingBatteries: 0
+  hasMagnet: 0
 --- !u!4 &68514591
 Transform:
   m_ObjectHideFlags: 0
@@ -341,7 +342,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jigsawVisits: 0
   safeVisits: 0
-  bpuzzleVisists: 0
+  solvedBPuzzle: 0
+  solvedMatchPuzzle: 0
   currentTimeout: 0
   text: {fileID: 2009428937}
   b00: 0
@@ -2371,7 +2373,7 @@ GameObject:
   - component: {fileID: 628398625}
   m_Layer: 0
   m_Name: Point Light Battery Puzzle
-  m_TagString: Untagged
+  m_TagString: bp_light
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

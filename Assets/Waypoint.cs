@@ -17,7 +17,7 @@ public class Waypoint : MonoBehaviour
     private PuzzleManager _pm;
     private GameObject tutorial_text;
     private UI_Text_Handler _uth;
-    
+
     public Waypoints waypoint;
 
     // Start is called before the first frame update
@@ -51,12 +51,10 @@ public class Waypoint : MonoBehaviour
 
     private void bPuzzle()
     {
-        if (_uth.bpuzzleVisists == 0)
-        {
-            
-        }
-        
-        _uth.bpuzzleVisists++;
+        _uth.BPuzzleEnter();
+
+        var l = GameObject.FindGameObjectWithTag("bp_light").GetComponent<Light>();
+        l.enabled = true;
         
         puzzlePre();
         _pm.bPuzzleActive = true;
@@ -94,7 +92,7 @@ public class Waypoint : MonoBehaviour
     {
         puzzlePre();
     }
-    
+
     private void OnMouseUpAsButton()
     {
         if (tutorial_text == null) return;
