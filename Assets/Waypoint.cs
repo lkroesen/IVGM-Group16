@@ -91,6 +91,7 @@ public class Waypoint : MonoBehaviour
     private void Matches()
     {
         puzzlePre();
+        _uth.MatchPuzzleEnter();
     }
 
     private void OnMouseUpAsButton()

@@ -73,6 +73,7 @@ public class RushHourPiece : MonoBehaviour
         colliding = false;
     }
 
+    
     private void Start()
     {
         _bpm = transform.parent.transform.parent.transform.parent.GetComponent<BatteryPuzzleManager>();
@@ -217,6 +218,8 @@ public class RushHourPiece : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!_bpm._uth.solvedMatchPuzzle) return;
+
         if (timeout >= 0) return;
         timeout = timeout_max;
 
@@ -232,12 +235,16 @@ public class RushHourPiece : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (!_bpm._uth.solvedMatchPuzzle) return;
+        
         if (!colliding)
             stored_pos = transform.position;
     }
 
     private void OnMouseDrag()
     {
+        if (!_bpm._uth.solvedMatchPuzzle) return;
+        
         var cursorPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, actual_location.z);
         if (Camera.main == null) return;
         var cursorPosition = Camera.main.ScreenToWorldPoint(cursorPoint) + difference;

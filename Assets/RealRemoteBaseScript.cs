@@ -102,9 +102,10 @@ public class RealRemoteBaseScript : MonoBehaviour
         if (_pm.bPuzzleActive)
         {
             _pm.bPuzzleActive = false;
+            GameObject.FindGameObjectWithTag("bp_light").GetComponent<Light>().enabled = false;
             _pm.syncBPuzzle();
         }
-        
+
         _pm.showExterior();
 
     }

@@ -8,7 +8,8 @@ public class UI_Text_Handler : MonoBehaviour
 {
     public int jigsawVisits = 0;
     public int safeVisits = 0;
-    public int bpuzzleVisists = 0;
+    public bool solvedBPuzzle = false;
+    public bool solvedMatchPuzzle = false;
     
     public float currentTimeout = 0;
     public GameObject text;
@@ -112,6 +113,37 @@ public class UI_Text_Handler : MonoBehaviour
     {
         enqueueText("That's two! Now the remote should work", 2.5f);
     }
+
+    public void BPuzzleEnter()
+    {
+        if (solvedBPuzzle) return;
+        
+        enqueueText(
+            solvedMatchPuzzle
+                ? "Now that I have a magnet I should be able to move the objects behind the glass!"
+                : "Hmm, no way for me to move these batteries, I'd need something to move it through the glass", 4);
+    }
+
+    public void MatchPuzzleEnter()
+    {
+        if (solvedMatchPuzzle) return;
+        
+        enqueueText("Hmm, so what have we got here, looks like the order of these matches is important...", 4);
+    }
     
+    public void preWinMatchPuzzle()
+    {
+        if (solvedMatchPuzzle) return;
+
+        enqueueText("Oh part of the match came off?", 3);
+    }
+
+    public void winMatchPuzzle()
+    {
+        if (solvedMatchPuzzle) return;
+        
+        solvedMatchPuzzle = true;
+        enqueueText("Looks like a magnet, where do I need to use this?", 4);
+    }
     
 }

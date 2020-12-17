@@ -16,11 +16,15 @@ public class BatteryPuzzleManager : MonoBehaviour
     private GameObject wp;
 
     private PuzzleManager _pm;
+
+    public UI_Text_Handler _uth;
     
     private void Start()
     {
         wp = GameObject.FindGameObjectWithTag("bp_wp");
         _pm = GameObject.FindGameObjectWithTag("Player").GetComponent<PuzzleManager>();
+        var controller = GameObject.FindGameObjectWithTag("Player");
+        _uth = controller.GetComponent<UI_Text_Handler>();
     }
 
     public void leftBatteryObtain()

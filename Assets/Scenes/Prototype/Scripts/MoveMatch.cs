@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoveMatch : MonoBehaviour
 {
-
     public bool activePiece = false;
 
     public Rigidbody _rigidbody;
@@ -15,9 +14,12 @@ public class MoveMatch : MonoBehaviour
 
     private bool inCollider = false;
 
+    private MagnetSpawner _ms;
+    
     // Start is called before the first frame update
     private void Start()
     {
+        _ms = this.transform.parent.gameObject.GetComponent<MagnetSpawner>();
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
         // Store Position so that match can return to initial position
@@ -52,7 +54,10 @@ public class MoveMatch : MonoBehaviour
                 transform.position.z - init_pos.z < 0.05f && transform.position.z - init_pos.z > -0.05f){
           var position = new Vector3(init_pos.x - 0.2f, transform.position.y, init_pos.z);
           transform.position = position;
-          //win
+          var controller = GameObject.FindGameObjectWithTag("Player");
+          var _uth = controller.GetComponent<UI_Text_Handler>();
+          _uth.preWinMatchPuzzle();
+          Instantiate(_ms.magnet, _ms.magnet_wp.transform);
         }
         else{
           transform.position = init_pos;

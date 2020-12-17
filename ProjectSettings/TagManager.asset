@@ -18,6 +18,7 @@ TagManager:
   - bp_shell
   - bp_wp
   - bp_light
+  - magnet
   layers:
   - Default
   - TransparentFX
