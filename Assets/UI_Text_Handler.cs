@@ -14,6 +14,7 @@ public class UI_Text_Handler : MonoBehaviour
     public float currentTimeout = 0;
     public GameObject text;
     private Text _text;
+    public GameObject panel;
 
     private RemoteController _rc;
 
@@ -41,7 +42,7 @@ public class UI_Text_Handler : MonoBehaviour
     {
         _text.text = _t;
         currentTimeout = duration;
-        text.SetActive(true);
+        panel.SetActive(true);
     }
 
     private void Update()
@@ -54,7 +55,7 @@ public class UI_Text_Handler : MonoBehaviour
         
         if (currentTimeout <= 0)
         {
-            text.gameObject.SetActive(false);
+            panel.gameObject.SetActive(false);
         }
         currentTimeout -= Time.deltaTime;
     }
@@ -145,5 +146,9 @@ public class UI_Text_Handler : MonoBehaviour
         solvedMatchPuzzle = true;
         enqueueText("Looks like a magnet, where do I need to use this?", 4);
     }
-    
+
+    public void RemoteTutorial()
+    {
+        enqueueText("[Click on the top right button to return to your previous position]", 6);
+    }
 }

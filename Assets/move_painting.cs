@@ -6,6 +6,9 @@ public class move_painting : MonoBehaviour
 {
     static private bool slide;
     static private bool done;
+
+    public bool shownText = false;
+    
     static float distance = 0;
     private UI_Text_Handler _uth;
     // Start is called before the first frame update
@@ -24,16 +27,17 @@ public class move_painting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float delta = Time.deltaTime;
-        if (slide){
-            distance = distance + delta;
-            if(distance < 1){
-                transform.Translate(new Vector3(delta,0, 0));
-            }
-            else{
-                done = true;
-                _uth.SafeText();
-            }
+        var delta = Time.deltaTime;
+        if (!slide) return;
+        distance += delta;
+        if(distance < 1){
+            transform.Translate(new Vector3(delta,0, 0));
+        }
+        else{
+            done = true;
+            if (shownText) return;
+            shownText = true;
+            _uth.SafeText();
         }
     }
 

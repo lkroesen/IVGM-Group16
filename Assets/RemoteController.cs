@@ -70,6 +70,8 @@ public class RemoteController : MonoBehaviour
             allowed_to_press = false;
         }
     }*/
+
+    public bool firstTimeRemoteShowing = true;
     
     public bool hasRemote = true;
     public GameObject remote;
@@ -80,10 +82,16 @@ public class RemoteController : MonoBehaviour
     public bool hasMagnet = false;
     
     private GameObject tutorial_text;
+
+    private UI_Text_Handler _uth;
     
     private void Start()
     {
         tutorial_text = GameObject.FindGameObjectWithTag("TUTORIAL");
+        
+        var controller = GameObject.FindGameObjectWithTag("Player");
+        _uth = controller.GetComponent<UI_Text_Handler>();
+        
     }
 
 
@@ -104,7 +112,17 @@ public class RemoteController : MonoBehaviour
         }
 
         if (!Input.GetMouseButtonDown(1)) return;
-        remote.SetActive(!remote.activeSelf);
+        
         timeout = timeout_max;
+        
+        
+        
+        remote.SetActive(!remote.activeSelf);
+
+        if (!firstTimeRemoteShowing) return;
+        firstTimeRemoteShowing = false;
+        _uth.RemoteTutorial();
+
+
     }
 }
