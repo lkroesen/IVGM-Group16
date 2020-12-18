@@ -6,12 +6,16 @@ public class RealRemoteBaseScript : MonoBehaviour
     public GameObject over_tv;
     private UI_Text_Handler _uth;
     private RemoteController _rc;
+    private switch_script _ss;
+    private CypherHandler _ch;
     
     private void Start()
     {
         var controller = GameObject.FindGameObjectWithTag("Player");
         _rc = controller.GetComponent<RemoteController>();
         _uth = controller.GetComponent<UI_Text_Handler>();
+        _ss = GameObject.FindGameObjectWithTag("fusebox").GetComponent<switch_script>();
+        _ch = GameObject.FindGameObjectWithTag("cypher").GetComponent<CypherHandler>();
     }
 
     public void registerButtonClick(string value)
@@ -114,14 +118,27 @@ public class RealRemoteBaseScript : MonoBehaviour
     private static readonly int COLOR = Shader.PropertyToID("_Color");
 
     public GameObject lights;
-
+    public bool triggerBlackout = true;
+        
     void powerButton()
     {
         print("Pressing powerbutton.");
-        over_tv.SetActive(isTvOn);
+        
         isTvOn = !isTvOn;
 
-        lights.GetComponent<lighting>().setAllLighting(0.1f);
+        if (_uth.blackout)
+        {
+            lights.GetComponent<lighting>().setAllLighting(0.1f);
+            _ss.activate();
+            _ch.showText();
+            _uth.Blackout();
+        }
+        else
+        {
+            over_tv.SetActive(isTvOn);
+        }
+        
+        
 
         
         /*

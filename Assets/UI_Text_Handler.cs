@@ -16,6 +16,8 @@ public class UI_Text_Handler : MonoBehaviour
     private Text _text;
     public GameObject panel;
 
+    public bool blackout = true;
+    
     private RemoteController _rc;
 
     public Queue<KeyValuePair<String, float>> messageQueue = new Queue<KeyValuePair<string, float>>();
@@ -26,7 +28,6 @@ public class UI_Text_Handler : MonoBehaviour
         _rc = GameObject.FindGameObjectWithTag("Player").GetComponent<RemoteController>();
         enqueueText("I'd really like to watch some TV, now where did I leave that remote, it should be around here somewhere...", 9f);
     }
-
 
     private void enqueueText(string _t, float duration)
     {
@@ -150,5 +151,10 @@ public class UI_Text_Handler : MonoBehaviour
     public void RemoteTutorial()
     {
         enqueueText("[Click on the top right button to return to your previous position]", 6);
+    }
+    
+    public void Blackout()
+    {
+        enqueueText("No! The power went out, I will have to find the breaker to turn the power back on.", 8);
     }
 }

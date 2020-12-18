@@ -17,6 +17,8 @@ public class switch_script : MonoBehaviour
 
     public GameObject lights;
 
+    public UI_Text_Handler _uth;
+    
     void Start()
     {
         one = GameObject.Find("1");       
@@ -27,7 +29,9 @@ public class switch_script : MonoBehaviour
         state = new bool[6] {true, false, false, false, false, false};    
         done = false;
         active = false;
-        activate();
+        
+        var controller = GameObject.FindGameObjectWithTag("Player");
+        _uth = controller.GetComponent<UI_Text_Handler>();
     }
 
     public int getState(){
@@ -41,7 +45,7 @@ public class switch_script : MonoBehaviour
     }
 
     //powerout
-    void activate(){
+    public void activate(){
         one.transform.RotateAround(one.transform.parent.position, Vector3.forward, -90.0f);
         ChangeColor(one, Color.red);
         two.transform.RotateAround(two.transform.parent.position, Vector3.forward, -90.0f);
@@ -127,5 +131,7 @@ public class switch_script : MonoBehaviour
         done = true;
         active = false;
         lights.GetComponent<lighting>().setAllLighting(1f);
+        _uth.blackout = false;
+        GameObject.FindGameObjectWithTag("cypher").GetComponent<CypherHandler>().hideText();
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public enum Waypoints
 {
-    Normal, JigSaw, BPuzzle, BPuzzlePre, Safe, Fusebox, Matches
+    Normal, JigSaw, BPuzzle, BPuzzlePre, Safe, Fusebox, Matches, Cypher
 }
 
 public class Waypoint : MonoBehaviour
@@ -107,6 +107,7 @@ public class Waypoint : MonoBehaviour
             case Waypoints.Safe : safe(); break;
             case Waypoints.Fusebox : Fusebox(); break;
             case Waypoints.Matches : Matches(); break;
+            case Waypoints.Cypher : break;
         }
 
         var parent = this.transform.parent;

@@ -7,6 +7,20 @@ TagManager:
   - POSITION
   - PIECE
   - KILLBOX
+  - bp_piece
+  - Match
+  - TUTORIAL
+  - bp_wp
+  - bp_goal_r
+  - bp_goal_l
+  - bp_shell
+  - bp_light
+  - bp_goal
+  - Correct
+  - REMOTE
+  - magnet
+  - fusebox
+  - cypher
   layers:
   - Default
   - TransparentFX
