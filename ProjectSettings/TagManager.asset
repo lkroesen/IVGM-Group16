@@ -4,10 +4,21 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Match
+  - Correct
   - POSITION
   - PIECE
   - REMOTE
   - TUTORIAL
+  - bp_Wall
+  - bp_piece
+  - bp_goal
+  - bp_goal_l
+  - bp_goal_r
+  - bp_shell
+  - bp_wp
+  - bp_light
+  - magnet
   layers:
   - Default
   - TransparentFX

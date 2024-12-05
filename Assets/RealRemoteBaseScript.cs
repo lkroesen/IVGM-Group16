@@ -1,22 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class RealRemoteBaseScript : MonoBehaviour
 {
     public GameObject tv;
     public GameObject over_tv;
+    private UI_Text_Handler _uth;
+    private RemoteController _rc;
     
+    private void Start()
+    {
+        var controller = GameObject.FindGameObjectWithTag("Player");
+        _rc = controller.GetComponent<RemoteController>();
+        _uth = controller.GetComponent<UI_Text_Handler>();
+    }
+
     public void registerButtonClick(string value)
     {
         switch (value)
         {
-            case "E" : 
+            case "E" :
                 Return();
-                break;
-            case "P" : 
-                powerButton();
                 break;
             case "L" : return;
             case "H" :
@@ -24,20 +27,47 @@ public class RealRemoteBaseScript : MonoBehaviour
                 break;
             case "V" : return;
             case "C" : return;
-            // Numbers
-            case "1" : return;
-            case "2" : return;
-            case "3" : return;
-            case "4" : return;
-            case "5" : return;
-            case "6" : return;
-            case "7" : return;
-            case "8" : return;
-            case "9" : return;
-            case "0" : return;
+            default:
+            {
+                if (!Batteries()) return;
+        
+                switch (value)
+                {
+                    case "P" : 
+                        powerButton();
+                        break;
+                    case "1" : break;
+                    case "2" : break;
+                    case "3" : break;
+                    case "4" : break;
+                    case "5" : break;
+                    case "6" : break;
+                    case "7" : break;
+                    case "8" : break;
+                    case "9" : break;
+                    case "0" : break;
+                }
+
+                break;
+            }
         }
     }
 
+    bool Batteries()
+    {
+        switch (_rc.workingBatteries)
+        {
+            case 0:
+                _uth.Batteries0();
+                return false;
+            case 1:
+                _uth.Batteries1();
+                return false;
+            default:
+                return true;
+        }
+    }
+    
     void hButton()
     {
         
@@ -68,17 +98,31 @@ public class RealRemoteBaseScript : MonoBehaviour
     {
         _cmm.Disable_Camera_Movement = false;
         var _pm = gamecontroller.GetComponent<PuzzleManager>();
+
+        if (_pm.bPuzzleActive)
+        {
+            _pm.bPuzzleActive = false;
+            GameObject.FindGameObjectWithTag("bp_light").GetComponent<Light>().enabled = false;
+            _pm.syncBPuzzle();
+        }
+
         _pm.showExterior();
+
     }
 
     public bool isTvOn = false;
     private static readonly int COLOR = Shader.PropertyToID("_Color");
 
+    public GameObject lights;
 
     void powerButton()
     {
+        print("Pressing powerbutton.");
         over_tv.SetActive(isTvOn);
         isTvOn = !isTvOn;
+
+        lights.GetComponent<lighting>().setAllLighting(0.1f);
+
         
         /*
         var meshRenderer = tv.GetComponent<MeshRenderer>();

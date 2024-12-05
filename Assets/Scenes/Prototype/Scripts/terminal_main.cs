@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class terminal_main : MonoBehaviour
 {
@@ -35,9 +33,7 @@ public class terminal_main : MonoBehaviour
         //Handles a button press. Called from button_1.cs.
         if(!done){
             int value = int.Parse(s);
-            Debug.Log(value);
             if(code[correct] == value){
-                Debug.Log("OK" + correct.ToString());
                 correct = correct + 1;
                 UpdateScreen();
             }
@@ -65,7 +61,6 @@ public class terminal_main : MonoBehaviour
             GameObject obj = GameObject.Find(screen);
             ChangeColor(obj, Color.red);
         }
-        Debug.Log("False");
     }
 
     void Succes(){
@@ -75,30 +70,11 @@ public class terminal_main : MonoBehaviour
     void Update(){
         //Opening door angle degrees
         if(done){
-            float delta = 20 * Time.deltaTime;
+            float delta = 80 * Time.deltaTime;
             angle = angle + delta;
             if (angle < 110){
                 door.transform.RotateAround(hinge.transform.position, Vector3.up, delta);
             }
         }     
     }
-
-    // GameObject screen1;
-    // GameObject screen3;
-    // GameObject screen6;
-    // public int progressint;
-    // int [] array_sequence = new int[3] {1,3,6};
-    // Start is called before the first frame update
-
-
-    // // Update is called once per frame
-    // void Update()
-    // {
-    //     for (int i = 0; i < array_sequence.Length; i++){
-    //         string screennumber = ("screen"+array_sequence[i].ToString());
-    //         Debug.Log(screennumber);
-    //         GameObject obj = GameObject.Find(screennumber);
-    //         ChangeColor(obj, Color.blue);
-    //     }
-    // }
 }
